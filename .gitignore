@@ -1,0 +1,27 @@
+# --- Python Bytecode & Cache ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+env/
+
+# --- Django Specific ---
+*.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# --- IDE & Editor Files ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.DS_Store
+
+# --- Environment & Secret Files ---
+.env
+*.log
