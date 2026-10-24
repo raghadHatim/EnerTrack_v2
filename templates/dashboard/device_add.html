@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}إضافة جهاز{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'dashboard/css/devices.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/device_add.css' %}">
+{% url 'devices' as list_url %}
+
+<section class="dv-page">
+  <header class="dv-head">
+    <div>
+      <h1>إضافة جهاز</h1>
+      <p>اختاري نوع الجهاز وعبّي بياناته، والمجسم يتغير معك.</p>
+    </div>
+    <a class="da-back" href="{{ list_url|default:'#' }}">الرجوع للأجهزة</a>
+  </header>
+
+  {% if received %}
+  <div class="da-note" role="status">
+    وصلت البيانات: {{ received.name }} ({{ received.device_id }}). الحفظ في قاعدة البيانات ما انربط بعد.
+  </div>
+  {% endif %}
+
+  <div class="da-layout">
+    <div class="da-preview">
+      <div class="dv-stage" data-manual data-status="idle">
+        <canvas aria-label="معاينة مجسم الجهاز"></canvas>
+        <span class="dv-id" id="idChip">DW-000</span>
+      </div>
+      <p class="da-hint">اسحبي المجسم لتدويره، ومرّري عليه ليفتح.</p>
+    </div>
+
+    <form class="da-form" method="post">
+      {% csrf_token %}
+
+      <fieldset class="da-types">
+        <legend>نوع الجهاز</legend>
+        <label><input type="radio" name="kind" value="dishwasher" checked><span>غسالة صحون</span></label>
+        <label><input type="radio" name="kind" value="fridge"><span>ثلاجة</span></label>
+        <label><input type="radio" name="kind" value="washer"><span>غسالة ملابس</span></label>
+        <label><input type="radio" name="kind" value="ac"><span>مكيّف</span></label>
+        <label><input type="radio" name="kind" value="other"><span>جهاز آخر</span></label>
+      </fieldset>
+
+      <div class="da-field">
+        <label for="f-name">اسم الجهاز</label>
+        <input id="f-name" name="name" required maxlength="60" placeholder="مثال: غسالة المطبخ">
+      </div>
+
+      <div class="da-row">
+        <div class="da-field">
+          <label for="f-brand">الماركة</label>
+          <input id="f-brand" name="brand" required maxlength="40" placeholder="Bosch">
+        </div>
+        <div class="da-field">
+          <label for="f-model">الموديل</label>
+          <input id="f-model" name="model_name" required maxlength="40" placeholder="SMS25">
+        </div>
+      </div>
+
+      <div class="da-field">
+        <label for="f-power">القدرة المقدّرة (W)</label>
+        <input id="f-power" name="rated_power" type="number" min="1" step="1" inputmode="numeric" required placeholder="1900">
+        <small>تجدينها على ملصق الجهاز.</small>
+      </div>
+
+      <div class="da-field">
+        <label for="f-id">معرّف الجهاز</label>
+        <input id="f-id" name="device_id" readonly>
+        <small>يُنشأ تلقائياً ولا يتكرر.</small>
+      </div>
+
+      <button class="dv-add" type="submit">حفظ الجهاز</button>
+    </form>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="{% static 'dashboard/js/devices3d.js' %}"></script>
+<script src="{% static 'dashboard/js/device_add.js' %}"></script>
+{% endblock %}

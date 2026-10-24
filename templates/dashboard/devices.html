@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}الأجهزة{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'dashboard/css/devices.css' %}">
+{% url 'device_add' as add_url %}
+
+<section class="dv-page">
+  <header class="dv-head">
+    <div>
+      <h1>الأجهزة</h1>
+      <p>{{ devices|length }} أجهزة تحت المراقبة</p>
+    </div>
+    <a class="dv-add" href="{{ add_url|default:'#' }}">إضافة جهاز</a>
+  </header>
+
+  <div class="dv-grid">
+    {% for d in devices %}
+    <article class="dv-device">
+      <div class="dv-stage" data-kind="{{ d.kind }}" data-status="{{ d.status }}">
+        <canvas aria-label="مجسم ثلاثي الأبعاد: {{ d.name }}"></canvas>
+        <span class="dv-chip dv-{{ d.status }}">{{ d.status_label }}</span>
+        <span class="dv-id">{{ d.device_id }}</span>
+      </div>
+
+      <div class="dv-info">
+        <h2>{{ d.name }}</h2>
+        <p class="dv-sub">{{ d.brand }} {{ d.model_name }}</p>
+
+        <dl class="dv-stats">
+          <div><dt>القدرة الآن</dt><dd>{{ d.power }} <small>W</small></dd></div>
+          <div><dt>الجهد</dt><dd>{{ d.voltage }} <small>V</small></dd></div>
+          <div><dt>التيار</dt><dd>{{ d.current }} <small>A</small></dd></div>
+        </dl>
+
+        <p class="dv-meta">القدرة المقدّرة {{ d.rated_power }} W</p>
+      </div>
+    </article>
+    {% empty %}
+    <div class="dv-empty">
+      <p>ما فيه أجهزة بعد.</p>
+      <a class="dv-add" href="{{ add_url|default:'#' }}">أضيفي أول جهاز</a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="{% static 'dashboard/js/devices3d.js' %}"></script>
+{% endblock %}
