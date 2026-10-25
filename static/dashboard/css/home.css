@@ -1,0 +1,249 @@
+/* Dashboard-home Styles */
+.main-content {
+    display: block !important;
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.card {
+    max-width: none !important;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border-color, #EAEAEA);
+}
+
+.header-brand h1 {
+    margin: 0;
+    font-size: 22px;
+    color: var(--primary-blue, #11428D);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.live-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    animation: live-indicator 1.5s infinite;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-add-device {
+    background-color: var(--primary-yellow, #F6B819);
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-add-device:hover {
+    background-color: #e5a715;
+}
+
+.alerts-pill {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.dashboard-grid {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.main-col {
+    flex: 2 1 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.side-col {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.alerts-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    margin-bottom: 15px;
+}
+
+.view-all-link {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary-yellow, #F6B819);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.view-all-link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.alerts-table-card table {
+    width: 100%;
+    border-collapse: collapse;
+    
+}
+
+.alerts-table-card th {
+    color: #666;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+.alerts-table-card td {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+.device-cell {
+    font-weight: 700;
+    color: var(--primary-blue, #11428D);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.dot-high {
+    background: #ef4444;
+}
+
+.dot-medium {
+    background: #f59e0b;
+}
+
+.devices-sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.sidebar-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.sidebar-row:hover {
+    background: #fff;
+    border-color: var(--primary-yellow, #F6B819);
+    transform: translateX(4px);
+}
+
+.alert-count-badge {
+    background: #ef4444;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.chart-box {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    margin-top: 15px;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-menu-btn {
+    background: none;
+    border: none;
+    font-weight: 700;
+    color: var(--primary-blue, #11428D);
+    cursor: pointer;
+    font-family: 'Tajawal', sans-serif;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 120%;
+    right: 0;
+    min-width: 150px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.user-dropdown a:hover {
+    background: #f9f9f9;
+    color: #ef4444;
+}
+
+@keyframes live-indicator {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

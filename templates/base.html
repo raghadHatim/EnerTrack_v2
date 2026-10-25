@@ -1,15 +1,47 @@
-{% load static %}<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}نظام مراقبة الطاقة{% endblock %}</title>
+  <title>{% block title %} EnerTrack {% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { margin: 0; padding: 24px; background: #F4F4FA; font-family: 'Tajawal', sans-serif; }
-  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
 </head>
+
 <body>
-  {% block content %}{% endblock %}
+ <header class="site-header">
+    <div class="logo">
+<a> 
+  <img src="{% static 'dashboard/image/logo.png' %}" alt="EnerTrack logo"></a>
+    </div>
+
+    <div class="header-right">
+        {% if user.is_authenticated %}
+            <span class="username-display">مرحباً، {{ user.username }}</span>
+            <form action="{% url 'logout' %}" method="POST" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="auth-link">Login</a>
+            <a href="{% url 'signup' %}" class="auth-link signup-btn">Sign Up</a>
+        {% endif %}
+    </div>
+</header>
+  <main class="main-content">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 EnerTrack - Energy Monitoring System. All rights reserved.</p>
+  </footer>
+
 </body>
+
 </html>

@@ -1,5 +1,10 @@
 from django.shortcuts import render
 
+def home_view(request):
+    return render(request,'dashboard/home.html')
+
+def alerts_view(request):
+    return render(request,'dashboard/alerts.html')
 
 def devices_view(request):
     # بيانات تجريبية مؤقتة، تُستبدل لاحقاً ببيانات من قاعدة البيانات

@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}EnerTrack — Dashboard{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'dashboard/css/home.css' %}">
+
+
+<div class="dashboard-header">
+    <div class="header-brand">
+        <h1><span class="live-dot" aria-hidden="true"></span> EnerTrack Dashboard </h1>
+    </div>
+
+    <div class="header-actions">
+        <a href="{% url 'device_add' %}" class="btn-add-device">+ Add Device</a>
+</div>
+</div>
+
+<div class="dashboard-grid">
+
+    <div class="main-col">
+        <section class="card alerts-table-card">
+            <div class="alerts-header">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444; font-size: 18px;"></i>
+                    <h2 style="margin: 0;">Latest Alerts</h2>
+                </div>
+                <a href="{% url 'alerts' %}" class="view-all-link">View All →</a>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Device</th>
+                        <th>Alert Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="device-cell">Living Room AC</td>
+                        <td class="alert-cell"><span class="dot dot-high"></span> Very high energy consumption</td>
+                    </tr>
+                    <tr>
+                        <td class="device-cell">Kitchen Refrigerator</td>
+                        <td class="alert-cell"><span class="dot dot-medium"></span> Power fluctuation</td>
+                    </tr>
+                    <tr>
+                        <td class="device-cell">Water Heater</td>
+                        <td class="alert-cell"><span class="dot dot-high"></span> Operating outside peak hours</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <h2> Energy Consumption — Current Week</h2>
+            <div class="chart-box">
+                <canvas id="currentEnergyChart"></canvas>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2> Energy Consumption Forecast — Next Week</h2>
+            <div class="chart-box">
+                <canvas id="forecastEnergyChart"></canvas>
+            </div>
+        </section>
+    </div>
+
+    <div class="side-col">
+        <section class="card" style="text-align: center;">
+            <h3 style="color: #666; font-size: 16px; margin-bottom: 10px;">Total Active Alerts</h3>
+            <div style="font-size: 48px; font-weight: 800; color: var(--ener-blue, #11428D);">
+                3
+            </div>
+        </section>
+
+        <section class="card">
+            <h3 style="border-bottom: 1px solid #eee; padding-bottom: 10px;">Monitored Devices</h3>
+            <div class="devices-sidebar-list">
+                <a class="sidebar-row" href="#">
+                    <span>Living Room AC <span class="alert-count-badge">2</span></span>
+                    <span style="color: #999;">›</span>
+                </a>
+                <a class="sidebar-row" href="#">
+                    <span>Kitchen Refrigerator <span class="alert-count-badge">1</span></span>
+                    <span style="color: #999;">›</span>
+                </a>
+                <a class="sidebar-row" href="#">
+                    <span>Water Heater </span>
+                    <span style="color: #999;">›</span>
+                </a>
+                <a class="sidebar-row" href="#">
+                    <span>Guest Room Lighting</span>
+                    <span style="color: #999;">›</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function toggleUserMenu() {
+        document.getElementById("userDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.user-menu-btn')) {
+            var dropdowns = document.getElementsByClassName("user-dropdown");
+            for (var i = 0; i < dropdowns.length; i++) {
+                if (dropdowns[i].classList.contains('show')) {
+                    dropdowns[i].classList.remove('show');
+                }
+            }
+        }
+    }
+
+    const currentCtx = document.getElementById('currentEnergyChart').getContext('2d');
+    new Chart(currentCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            datasets: [{
+                label: 'Consumption (kWh)',
+                data: [120, 150, 180, 130, 160, 200, 210],
+                backgroundColor: '#11428D',
+                borderRadius: 4
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    const forecastCtx = document.getElementById('forecastEnergyChart').getContext('2d');
+    new Chart(forecastCtx, {
+        type: 'line',
+        data: {
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            datasets: [{
+                label: 'Forecast (kWh)',
+                data: [130, 145, 170, 140, 155, 210, 220],
+                borderColor: '#F6B819',
+                backgroundColor: 'rgba(246, 184, 25, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+</script>
+{% endblock %}
