@@ -1,73 +1,36 @@
-.da-back { color: var(--mute); font-weight: 700; font-size: 15px; text-decoration: none; }
-.da-back:hover { color: var(--ink); }
+.da-note { margin-bottom: 20px; padding: 12px 16px; border-radius: 8px; background: #ecfdf3; color: #166534; font-size: 14px; font-weight: 700; }
 
-.da-note {
-  margin-bottom: 22px;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #e8f7f0;
-  color: #17694a;
-  font-weight: 700;
-  font-size: 14.5px;
-}
-
-.da-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: 44px;
-  align-items: start;
-}
-
+.da-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .da-preview { position: sticky; top: 24px; }
-.da-preview .dv-stage { height: 350px; }
-.da-hint { margin: 12px 0 0; text-align: center; color: var(--mute); font-size: 13px; }
+.da-preview .dv-stage { height: 380px; }
 
-.da-form { display: grid; gap: 22px; }
+.da-form { display: grid; gap: 20px; padding: 28px; }
+.da-form .submit-button { margin-top: 4px; }
 
-.da-types { display: flex; flex-wrap: wrap; gap: 8px; border: 0; padding: 0; margin: 0; }
-.da-types legend { padding: 0; margin-bottom: 10px; font-weight: 700; font-size: 15px; }
-.da-types label { position: relative; cursor: pointer; }
-.da-types input { position: absolute; opacity: 0; inset: 0; }
+.da-types { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; border: 0; }
+.da-types legend { margin-bottom: 10px; padding: 0; font-size: 14px; font-weight: 700; color: var(--primary-blue, #11428D); }
+.da-types label { position: relative; margin: 0; cursor: pointer; }
+.da-types input { position: absolute; inset: 0; opacity: 0; }
 .da-types span {
-  display: inline-block;
-  padding: 9px 17px;
-  border-radius: 999px;
-  background: #fff;
-  border: 1.5px solid rgba(23, 23, 46, .12);
-  font-weight: 700;
-  font-size: 14px;
-  transition: background .15s, border-color .15s, color .15s;
+  display: inline-block; padding: 8px 16px; border-radius: 999px; background: #fff;
+  border: 1px solid var(--border-color, #EAEAEA); font-size: 14px; font-weight: 600;
+  transition: background .15s, color .15s, border-color .15s;
 }
-.da-types input:checked + span { background: var(--accent); border-color: var(--accent); color: #fff; }
-.da-types input:focus-visible + span { outline: 3px solid #b8b1f7; outline-offset: 2px; }
+.da-types input:checked + span { background: var(--primary-blue, #11428D); border-color: var(--primary-blue, #11428D); color: #fff; }
+.da-types input:focus-visible + span { outline: 3px solid rgba(246, 184, 25, .5); outline-offset: 2px; }
 
-.da-field { display: grid; gap: 6px; }
-.da-field label { font-weight: 700; font-size: 14.5px; }
-.da-field input {
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1.5px solid rgba(23, 23, 46, .12);
-  background: #fff;
-  font: inherit;
-  font-size: 15px;
-  color: var(--ink);
-}
-.da-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px #dcd8fb; }
-.da-field input[readonly] {
-  background: var(--stage);
-  color: var(--accent);
-  font-weight: 800;
-  direction: ltr;
-  text-align: right;
-}
-.da-field small { color: var(--mute); font-size: 12.5px; }
-.da-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.da-field label { margin-bottom: 8px; }
+.da-field small { display: block; margin-top: 6px; color: #666; font-size: 12.5px; line-height: 1.5; }
+.da-field input[readonly] { background: #f4f7fc; color: var(--primary-blue, #11428D); font-weight: 700; text-align: left; }
 
-.da-form .dv-add { justify-self: start; border: 0; cursor: pointer; font-family: inherit; }
+.da-more { display: grid; gap: 18px; padding-top: 16px; border-top: 1px solid var(--border-color, #EAEAEA); }
+.da-more > summary { cursor: pointer; font-size: 14px; font-weight: 700; color: var(--primary-blue, #11428D); }
+.da-more > summary em { font-style: normal; font-weight: 400; color: #777; }
+.da-more[open] > summary { margin-bottom: 16px; }
+.da-more .da-field + .da-field { margin-top: 18px; }
 
-@media (max-width: 760px) {
-  .da-layout { grid-template-columns: 1fr; gap: 26px; }
+@media (max-width: 800px) {
+  .da-layout { grid-template-columns: 1fr; }
   .da-preview { position: static; }
-  .da-preview .dv-stage { height: 270px; }
-  .da-row { grid-template-columns: 1fr; }
+  .da-preview .dv-stage { height: 260px; }
 }

@@ -1,83 +1,94 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}إضافة جهاز{% endblock %}
+{% block title %}Add Device — EnerTrack{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'dashboard/css/devices.css' %}">
-<link rel="stylesheet" href="{% static 'dashboard/css/device_add.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard/css/devices.css' %}?v=4">
+<link rel="stylesheet" href="{% static 'dashboard/css/device_add.css' %}?v=4">
 {% url 'devices' as list_url %}
 
 <section class="dv-page">
-  <header class="dv-head">
+  <a class="dv-back" href="{{ list_url|default:'#' }}"><i class="fa-solid fa-arrow-left"></i> Back to devices</a>
+
+  <div class="dv-head">
     <div>
-      <h1>إضافة جهاز</h1>
-      <p>اختاري نوع الجهاز وعبّي بياناته، والمجسم يتغير معك.</p>
+      <h1>Add Device</h1>
+     
     </div>
-    <a class="da-back" href="{{ list_url|default:'#' }}">الرجوع للأجهزة</a>
-  </header>
+  </div>
 
   {% if received %}
   <div class="da-note" role="status">
-    وصلت البيانات: {{ received.name }} ({{ received.device_id }}). الحفظ في قاعدة البيانات ما انربط بعد.
+    Received: {{ received.name }} ({{ received.device_id }}). Saving to the database is not connected yet.
   </div>
   {% endif %}
 
   <div class="da-layout">
-    <div class="da-preview">
+    <div class="dv-card da-preview">
       <div class="dv-stage" data-manual data-status="idle">
-        <canvas aria-label="معاينة مجسم الجهاز"></canvas>
+        <canvas aria-label="3D preview of the selected device type"></canvas>
         <span class="dv-id" id="idChip">DW-000</span>
       </div>
-      <p class="da-hint">اسحبي المجسم لتدويره، ومرّري عليه ليفتح.</p>
     </div>
 
-    <form class="da-form" method="post">
+    <form class="dv-card da-form" method="post">
       {% csrf_token %}
 
       <fieldset class="da-types">
-        <legend>نوع الجهاز</legend>
-        <label><input type="radio" name="kind" value="dishwasher" checked><span>غسالة صحون</span></label>
-        <label><input type="radio" name="kind" value="fridge"><span>ثلاجة</span></label>
-        <label><input type="radio" name="kind" value="washer"><span>غسالة ملابس</span></label>
-        <label><input type="radio" name="kind" value="ac"><span>مكيّف</span></label>
-        <label><input type="radio" name="kind" value="other"><span>جهاز آخر</span></label>
+        <legend>Device type</legend>
+        <label><input type="radio" name="kind" value="dishwasher" data-label="Dishwasher" checked><span>Dishwasher</span></label>
+        <label><input type="radio" name="kind" value="fridge" data-label="Refrigerator"><span>Refrigerator</span></label>
+        <label><input type="radio" name="kind" value="washer" data-label="Washing Machine"><span>Washing Machine</span></label>
+        <label><input type="radio" name="kind" value="ac" data-label="Air Conditioner"><span>Air Conditioner</span></label>
+        <label><input type="radio" name="kind" value="other" data-label=""><span>Other</span></label>
       </fieldset>
 
-      <div class="da-field">
-        <label for="f-name">اسم الجهاز</label>
-        <input id="f-name" name="name" required maxlength="60" placeholder="مثال: غسالة المطبخ">
-      </div>
-
-      <div class="da-row">
-        <div class="da-field">
-          <label for="f-brand">الماركة</label>
-          <input id="f-brand" name="brand" required maxlength="40" placeholder="Bosch">
-        </div>
-        <div class="da-field">
-          <label for="f-model">الموديل</label>
-          <input id="f-model" name="model_name" required maxlength="40" placeholder="SMS25">
-        </div>
+      <!-- Shown only when "Other" is selected -->
+      <div class="da-field" id="customType" hidden>
+        <label for="f-type">What type of device is it?</label>
+        <input id="f-type" name="device_type" maxlength="40" placeholder="e.g. Water heater">
       </div>
 
       <div class="da-field">
-        <label for="f-power">القدرة المقدّرة (W)</label>
-        <input id="f-power" name="rated_power" type="number" min="1" step="1" inputmode="numeric" required placeholder="1900">
-        <small>تجدينها على ملصق الجهاز.</small>
+        <label for="f-name">Device name</label>
+        <input id="f-name" name="name" required maxlength="60" placeholder="e.g. Kitchen dishwasher">
       </div>
 
       <div class="da-field">
-        <label for="f-id">معرّف الجهاز</label>
+        <label for="f-id">Device ID</label>
         <input id="f-id" name="device_id" readonly>
-        <small>يُنشأ تلقائياً ولا يتكرر.</small>
+        <small>Generated automatically and unique.</small>
       </div>
 
-      <button class="dv-add" type="submit">حفظ الجهاز</button>
+      <details class="da-more">
+        <summary>More details <em>(optional)</em></summary>
+
+        <div class="da-field">
+          <label for="f-plug">Smart plug ID</label>
+          <input id="f-plug" name="plug_id" maxlength="30" placeholder="e.g. 1000xxxxxx">
+          <small>Links this device to its sensor so readings can be collected. In the eWeLink app, open the plug and tap the (i) icon.</small>
+        </div>
+
+        <div class="da-field">
+          <label for="f-power">Rated power (W)</label>
+          <input id="f-power" name="rated_power" type="number" min="1" step="1" inputmode="numeric" placeholder="1900">
+          <small>Printed on the device label. Helps the system judge what counts as abnormal.</small>
+        </div>
+
+        <div class="da-field">
+          <label for="f-location">Location</label>
+          <input id="f-location" name="location" maxlength="40" placeholder="e.g. Kitchen">
+          <small>Used to group devices and label alerts.</small>
+        </div>
+      </details>
+
+      <button class="submit-button" type="submit">Save Device</button>
     </form>
   </div>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="{% static 'dashboard/js/devices3d.js' %}"></script>
-<script src="{% static 'dashboard/js/device_add.js' %}"></script>
+<script src="{% static 'dashboard/js/devices3d.js' %}?v=4"></script>
+<script src="{% static 'dashboard/js/device_add.js' %}?v=4"></script>
 {% endblock %}

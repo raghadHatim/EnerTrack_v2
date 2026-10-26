@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %} EnerTrack {% endblock %}</title>
+  <link rel="icon" type="image/png" href="{% static 'dashboard/image/favicon.png' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -16,7 +17,8 @@
 <body>
  <header class="site-header">
     <div class="logo">
-<a> 
+{% url 'home' as home_url %}
+<a href="{{ home_url|default:'/' }}" aria-label="EnerTrack home">
   <img src="{% static 'dashboard/image/logo.png' %}" alt="EnerTrack logo"></a>
     </div>
 

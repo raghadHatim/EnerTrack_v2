@@ -8,7 +8,7 @@
   const steel = mat(0xd5d8e4, { metalness: 0.5 });
   const white = mat(0xf7f7fb, { metalness: 0.05 });
   const dark = mat(0x23233a, { roughness: 0.85, metalness: 0 });
-  const panelMat = mat(0x3a3a54);
+  const panelMat = mat(0x1b2f5b);
 
   const box = (w, h, d, m, x = 0, y = 0, z = 0) => {
     const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m);
@@ -88,8 +88,8 @@
 
   function mount(stage) {
     const canvas = stage.querySelector('canvas');
-    const status = stage.dataset.status;
-    const running = status === 'running';
+    let status = stage.dataset.status;
+    let running = status === 'running';
 
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -98,14 +98,14 @@
     const cam = new THREE.PerspectiveCamera(35, 1, 0.1, 50);
     cam.position.set(0, 3.4, 8.6);
     cam.lookAt(0, 1.4, 0);
-    scene.add(new THREE.HemisphereLight(0xffffff, 0xb9b4ee, 0.95));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0xb4c4e6, 0.95));
     const sun = new THREE.DirectionalLight(0xffffff, 0.8);
     sun.position.set(4, 6, 5);
     scene.add(sun);
 
     const floor = new THREE.Mesh(
       new THREE.CircleGeometry(2.4, 48),
-      new THREE.MeshBasicMaterial({ color: 0xcfcaf3, transparent: true, opacity: 0.55 })
+      new THREE.MeshBasicMaterial({ color: 0xcdd9ee, transparent: true, opacity: 0.55 })
     );
     floor.rotation.x = -Math.PI / 2;
     scene.add(floor);
@@ -116,7 +116,8 @@
     scene.add(holder);
     holder.rotation.y = 0.6;
     let parts = {};
-    const setKind = (kind) => {
+    const setKind = (kind, st) => {
+      if (st) { status = st; running = st === 'running'; }
       while (body.children.length) body.remove(body.children[0]);
       open = 0;
       parts = (builders[kind] || builders.generic)(body, status);
@@ -131,19 +132,22 @@
     size();
     addEventListener('resize', size);
 
-    let drag = false, lastX = 0, hover = false, visible = true, open = 0, t = Math.random() * 6;
+    let moved = false, drag = false, lastX = 0, hover = false, visible = true, open = 0, t = Math.random() * 6;
     setKind(stage.dataset.kind);
 
     canvas.addEventListener('pointerdown', (e) => {
       drag = true;
+      moved = false;
       lastX = e.clientX;
       canvas.setPointerCapture(e.pointerId);
     });
     canvas.addEventListener('pointermove', (e) => {
       if (!drag) return;
+      if (Math.abs(e.clientX - lastX) > 1) moved = true;
       holder.rotation.y += (e.clientX - lastX) * 0.01;
       lastX = e.clientX;
     });
+    canvas.addEventListener('click', (e) => { if (moved) e.preventDefault(); });
     ['pointerup', 'pointercancel'].forEach((ev) => canvas.addEventListener(ev, () => (drag = false)));
     stage.addEventListener('pointerenter', () => (hover = true));
     stage.addEventListener('pointerleave', () => (hover = false));
@@ -163,7 +167,7 @@
       if (parts.led) parts.led.scale.setScalar(running && !reduce ? 1 + 0.35 * Math.sin(t * 4) : 1);
       renderer.render(scene, cam);
     })();
-    return { setKind };
+    return { setKind, resize: size };
   }
 
   document.querySelectorAll('.dv-stage:not([data-manual])').forEach(mount);
