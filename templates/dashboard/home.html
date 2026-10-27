@@ -13,7 +13,7 @@
 
     <div class="header-actions">
         <a href="{% url 'device_add' %}" class="btn-add-device">+ Add Device</a>
-</div>
+    </div>
 </div>
 
 <div class="dashboard-grid">
@@ -25,7 +25,7 @@
                     <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444; font-size: 18px;"></i>
                     <h2 style="margin: 0;">Latest Alerts</h2>
                 </div>
-                <a href="{% url 'alerts' %}" class="view-all-link">View All →</a>
+                <a href="{% url 'alerts' %}" class="view-all-link">View All Alerts →</a>
             </div>
             <table>
                 <thead>
@@ -75,22 +75,17 @@
         </section>
 
         <section class="card">
-            <h3 style="border-bottom: 1px solid #eee; padding-bottom: 10px;">Monitored Devices</h3>
+            <div class="alerts-header" style="border-bottom: 1px solid #eee; padding-bottom: 10px;">
+                <h3 style="margin: 0;">Monitored Devices</h3>
+                <a href="{% url 'devices' %}" class="view-all-link">View All Devices →</a>
+            </div>
             <div class="devices-sidebar-list">
                 <a class="sidebar-row" href="#">
                     <span>Living Room AC <span class="alert-count-badge">2</span></span>
                     <span style="color: #999;">›</span>
                 </a>
                 <a class="sidebar-row" href="#">
-                    <span>Kitchen Refrigerator <span class="alert-count-badge">1</span></span>
-                    <span style="color: #999;">›</span>
-                </a>
-                <a class="sidebar-row" href="#">
-                    <span>Water Heater </span>
-                    <span style="color: #999;">›</span>
-                </a>
-                <a class="sidebar-row" href="#">
-                    <span>Guest Room Lighting</span>
+                    <span>Kitchen Refrigerator </span>
                     <span style="color: #999;">›</span>
                 </a>
             </div>

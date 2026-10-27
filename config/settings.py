@@ -116,6 +116,12 @@ TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 
 USE_TZ = True
+# Where to send users who are not logged in
+LOGIN_URL = 'login'
+# Where to go after a successful login
+LOGIN_REDIRECT_URL = 'home'   
+# Where to go after logging out
+LOGOUT_REDIRECT_URL = 'login'
 
 
 # Static files (CSS, JavaScript, Images)

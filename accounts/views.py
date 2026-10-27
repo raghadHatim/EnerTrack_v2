@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 from .forms import SignUpForm, EmailLoginForm, ForgotPasswordForm, SetNewPasswordForm
 
 
+
 def login_view(request):
     if request.method == 'POST':
         form = EmailLoginForm(request.POST)
