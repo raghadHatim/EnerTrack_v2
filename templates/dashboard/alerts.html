@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="alerts-page-wrapper">
+    <!-- الترويسة العليا -->
+    <div class="alerts-header">
+        <div>
+            <h2 class="alerts-title">All Alerts</h2>
+            <p class="alerts-subtitle">System notifications and energy consumption warnings</p>
+        </div>
+        <a href="{% url 'home' %}" class="btn-back">
+            ← Back to Dashboard
+        </a>
+    </div>
+
+    <!-- بطاقة الجدول -->
+    <div class="alerts-card">
+        <table class="alerts-table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Device</th>
+                    <th>Alert Type</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for alert in alerts %}
+                <tr>
+                    <td class="cell-date">{{ alert.created_at|date:"M d, Y - H:i" }}</td>
+                    <td class="cell-device">{{ alert.device.name }}</td>
+                    <td class="cell-type">{{ alert.message }}</td>
+                    <td>
+                        <span class="status-badge {{ alert.severity }}">
+                            <span class="dot"></span> {{ alert.severity|title }}
+                        </span>
+                    </td>
+                </tr>
+                {% empty %}
+                <!-- بيانات تجريبية لمعاينة التصميم -->
+                <tr>
+                    <td class="cell-date">Oct 26, 2026 - 14:30</td>
+                    <td class="cell-device">Living Room AC</td>
+                    <td class="cell-type">Very high energy consumption</td>
+                    <td>
+                        <span class="status-badge critical">
+                            <span class="dot"></span> Critical
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="cell-date">Oct 26, 2026 - 10:15</td>
+                    <td class="cell-device">Kitchen Refrigerator</td>
+                    <td class="cell-type">Power fluctuation</td>
+                    <td>
+                        <span class="status-badge warning">
+                            <span class="dot"></span> Warning
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="cell-date">Oct 25, 2026 - 08:00</td>
+                    <td class="cell-device">Water Heater</td>
+                    <td class="cell-type">Operating outside peak hours</td>
+                    <td>
+                        <span class="status-badge critical">
+                            <span class="dot"></span> Critical
+                        </span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
