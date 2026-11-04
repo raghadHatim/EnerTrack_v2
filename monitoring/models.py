@@ -13,7 +13,7 @@ class DeviceeReading(models.Model):
     def __str__(self):
         return f"{self.device.name} - {self.power}W ({self.recorded_at.strftime('%Y-%m-%d %H:%M')})"
 
-    class Alert(models.Model):
+class Alert(models.Model):
      SEVERITY_CHOICES = [
         ('critical', 'Critical'),
         ('warning', 'Warning'),
