@@ -10,7 +10,6 @@ def home_view(request):
 def alerts_view(request):
     return render(request,'dashboard/alerts.html')
 
-
 @login_required
 def devices_view(request):
     # Temporary demo data; replaced later by data from the database.

@@ -22,5 +22,5 @@ class Device(models.Model):
     location = models.CharField(max_length=100, blank=True, null=True, help_text="Device location")
 
     def __str__(self):
-        return f"{self.name} ({self.delete})"
+        return f"{self.name} ({self.device_id})"
 
